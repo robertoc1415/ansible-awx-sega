@@ -1,5 +1,5 @@
 - name: Configure web server
-  hosts: all
+  hosts: vm2
   become: yes
   tasks:
     - name: Update apt cache
