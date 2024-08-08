@@ -6,3 +6,8 @@ all:
       ansible_user: superuser
       ansible_password: passcode344!1
       ansible_become_pass: passcode344!1
+    vm2:
+      ansible_host: 52.186.27.213
+      ansible_user: superuser
+      ansible_password: passcode344!1
+      ansible_become_pass: passcode344!1
