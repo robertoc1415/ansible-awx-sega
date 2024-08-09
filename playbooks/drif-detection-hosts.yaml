@@ -1,17 +1,18 @@
 - name: Verificar y restaurar el archivo /etc/hosts
   hosts: vm2
-  become: yes  # Añadir esta línea para elevar privilegios
+  become: yes
   tasks:
     - name: Comparar el archivo /etc/hosts con el original
       ansible.builtin.command: diff /etc/hosts /usr/local/etc/hosts_original
       register: diff_output
-      changed_when: diff_output.rc == 1  # Marcar como cambiado si hay diferencias
+      failed_when: false
+      changed_when: diff_output.rc != 0 and diff_output.stdout != ''
 
     - name: Restaurar el archivo /etc/hosts si es diferente
       ansible.builtin.copy:
         src: /usr/local/etc/hosts_original
         dest: /etc/hosts
         mode: '0644'
-      when: diff_output.rc == 1
+      when: diff_output.rc != 0 and diff_output.stdout != ''
       notify:
         - Log restore
