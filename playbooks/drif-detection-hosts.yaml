@@ -1,6 +1,6 @@
 # playbooks/verificar_hosts.yml
 - name: Verificar y restaurar el archivo /etc/hosts
-  hosts: all
+  hosts: vm2
   tasks:
     - name: Comparar el archivo /etc/hosts con el original
       ansible.builtin.command: diff /etc/hosts /usr/local/etc/hosts_original
