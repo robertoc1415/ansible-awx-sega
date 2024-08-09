@@ -1,11 +1,11 @@
-# playbooks/verificar_hosts.yml
 - name: Verificar y restaurar el archivo /etc/hosts
   hosts: vm2
+  become: yes  # Añadir esta línea para elevar privilegios
   tasks:
     - name: Comparar el archivo /etc/hosts con el original
       ansible.builtin.command: diff /etc/hosts /usr/local/etc/hosts_original
       register: diff_output
-      failed_when: diff_output.rc == 1
+      changed_when: diff_output.rc == 1  # Marcar como cambiado si hay diferencias
 
     - name: Restaurar el archivo /etc/hosts si es diferente
       ansible.builtin.copy:
@@ -15,7 +15,3 @@
       when: diff_output.rc == 1
       notify:
         - Log restore
-
-  handlers:
-    - name: Log restore
-      ansible.builtin.command: echo "El archivo /etc/hosts fue restaurado a su estado original" >> /var/log/hosts_restore.log
