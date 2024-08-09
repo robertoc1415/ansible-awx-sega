@@ -1,0 +1,21 @@
+# playbooks/verificar_hosts.yml
+- name: Verificar y restaurar el archivo /etc/hosts
+  hosts: all
+  tasks:
+    - name: Comparar el archivo /etc/hosts con el original
+      ansible.builtin.command: diff /etc/hosts /usr/local/etc/hosts_original
+      register: diff_output
+      failed_when: diff_output.rc == 1
+
+    - name: Restaurar el archivo /etc/hosts si es diferente
+      ansible.builtin.copy:
+        src: /usr/local/etc/hosts_original
+        dest: /etc/hosts
+        mode: '0644'
+      when: diff_output.rc == 1
+      notify:
+        - Log restore
+
+  handlers:
+    - name: Log restore
+      ansible.builtin.command: echo "El archivo /etc/hosts fue restaurado a su estado original" >> /var/log/hosts_restore.log

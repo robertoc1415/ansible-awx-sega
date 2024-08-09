@@ -4,7 +4,7 @@
   tasks:
     - name: Asegurarse de que Apache esté escuchando en el puerto 80
       ansible.builtin.lineinfile:
-        path: /etc/httpd/conf/httpd.conf
+        path: /etc/apache2/ports.conf
         regexp: '^Listen '
         line: 'Listen 80'
       notify:
@@ -13,5 +13,5 @@
   handlers:
     - name: Restart Apache
       ansible.builtin.service:
-        name: httpd
+        name: apache2 
         state: restarted
