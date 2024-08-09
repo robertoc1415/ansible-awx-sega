@@ -13,6 +13,7 @@
         src: /usr/local/etc/hosts_original
         dest: /etc/hosts
         mode: '0644'
+        remote_src: yes  # Indicar que el archivo está en el host remoto
       when: diff_output.rc != 0 and diff_output.stdout != ''
       notify:
         - Log restore
