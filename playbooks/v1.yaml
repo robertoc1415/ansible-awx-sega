@@ -1,4 +1,3 @@
----
 - name: Verificar y restaurar el archivo /etc/hosts
   hosts: vm2
   become: yes
@@ -6,5 +5,5 @@
     - name: Comparar el archivo /etc/hosts con el original
       ansible.builtin.command: diff /etc/hosts /usr/local/etc/hosts_original
       register: diff_output
-      failed_when: false
-      changed_when: diff_output.rc != 0 and diff_output.stdout != ''
+      failed_when: diff_output.rc != 0
+      changed_when: false
