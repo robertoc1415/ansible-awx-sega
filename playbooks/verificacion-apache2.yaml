@@ -1,21 +1,30 @@
-- name: Check web server configuration
-  hosts: all
+---
+- name: Verify and reconfigure Apache if not running
+  hosts: vm2
   become: yes
   tasks:
-    - name: Check if Apache is installed
-      shell: dpkg-query -W -f='${Status}' apache2
-      register: apache_installed
-      changed_when: false
-      failed_when: "'install ok installed' not in apache_installed.stdout"
-
-    - name: Check if Apache service is running
+    - name: Check if Apache is running
       shell: systemctl is-active apache2
-      register: apache_running
-      changed_when: false
-      failed_when: apache_running.stdout.strip() != "active"
+      register: apache_status
+      ignore_errors: yes
 
-    - name: Check if Apache service is enabled
-      shell: systemctl is-enabled apache2
-      register: apache_enabled
-      changed_when: false
-      failed_when: apache_enabled.stdout.strip() != "enabled"
+    - name: Apply configuration if Apache is not running
+      block:
+        - name: Apply Apache configuration
+          template:
+            src: /usr/local/etc/hosts_original
+            dest: /etc/hosts
+            mode: '0644'
+
+        - name: Restart Apache service
+          service:
+            name: apache2
+            state: restarted
+            enabled: yes
+      when: apache_status.stdout != "active"
+
+    - name: Ensure Apache is running and enabled
+      service:
+        name: apache2
+        state: started
+        enabled: yes

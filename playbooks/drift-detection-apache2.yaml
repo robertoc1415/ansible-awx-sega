@@ -1,6 +1,6 @@
 - name: Verificar y corregir la configuración de Apache
   hosts: vm2
-  become: yes  # Añadir esta línea para elevar privilegios
+  become: yes  
   tasks:
     - name: Asegurarse de que Apache esté escuchando en el puerto 80
       ansible.builtin.lineinfile:
