@@ -12,8 +12,8 @@
       block:
         - name: Apply Apache configuration
           template:
-            src: /usr/local/etc/hosts_original
-            dest: /etc/hosts
+            src: /etc/apache2/apache2.conf
+            dest: /etc/apache2/sites-available/000-default.conf
             mode: '0644'
             remote_src: yes 
 
