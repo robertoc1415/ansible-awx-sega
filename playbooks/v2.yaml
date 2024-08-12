@@ -1,0 +1,19 @@
+---
+- name: Restaurar el archivo /etc/hosts si es diferente
+  hosts: vm2
+  become: yes
+  tasks:
+    - name: Restaurar el archivo /etc/hosts
+      ansible.builtin.copy:
+        src: /usr/local/etc/hosts_original
+        dest: /etc/hosts
+        mode: '0644'
+        remote_src: yes  
+      when: diff_output.rc != 0 and diff_output.stdout != ''
+      notify:
+        - Log restore
+
+  handlers:
+    - name: Log restore
+      ansible.builtin.command:
+        cmd: echo "El archivo /etc/hosts fue restaurado a su estado original" >> /var/log/hosts_restore.log
