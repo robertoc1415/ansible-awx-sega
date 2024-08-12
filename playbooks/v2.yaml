@@ -9,7 +9,6 @@
         dest: /etc/hosts
         mode: '0644'
         remote_src: yes  
-      when: diff_output.rc != 0 and diff_output.stdout != ''
       notify:
         - Log restore
 
