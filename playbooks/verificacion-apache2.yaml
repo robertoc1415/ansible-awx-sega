@@ -15,6 +15,7 @@
             src: /usr/local/etc/hosts_original
             dest: /etc/hosts
             mode: '0644'
+            remote_src: yes 
 
         - name: Restart Apache service
           service:
