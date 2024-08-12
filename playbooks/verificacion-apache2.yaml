@@ -11,11 +11,11 @@
     - name: Apply configuration if Apache is not running
       block:
         - name: Apply Apache configuration
-          template:
-            src: /etc/apache2/apache2.conf
+          copy:
+            src: /etc/apache2/apache2.conf 
             dest: /etc/apache2/sites-available/000-default.conf
             mode: '0644'
-            remote_src: yes 
+            remote_src: yes
 
         - name: Restart Apache service
           service:
