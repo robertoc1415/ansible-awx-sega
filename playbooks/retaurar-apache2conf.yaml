@@ -5,6 +5,6 @@
   tasks:
     - name: Copiar apache.conf sobre apache2.conf
       copy:
-        src: /etc/apache2/apache.conf
+        src: /etc/apache2/apache2-original.conf
         dest: /etc/apache2/apache2.conf
         remote_src: yes

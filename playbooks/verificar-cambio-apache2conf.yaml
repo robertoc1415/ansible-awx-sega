@@ -4,7 +4,7 @@
   become: yes
   tasks:
     - name: Verificar si los archivos son iguales
-      command: diff /etc/apache2/apache2.conf /etc/apache2/sites-available/000-default.conf
+      command: diff /etc/apache2/apache2.conf /etc/apache2/apache2-original.conf
       register: diff_result
       ignore_errors: yes
 
