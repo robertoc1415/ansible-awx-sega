@@ -1,0 +1,10 @@
+---
+- name: Reemplazar apache.conf sobre apache2.conf 
+  hosts: vm2
+  become: yes
+  tasks:
+    - name: Copiar apache.conf sobre apache2.conf
+      copy:
+        src: /etc/apache2/apache.conf
+        dest: /etc/apache2/apache2.conf
+        remote_src: yes

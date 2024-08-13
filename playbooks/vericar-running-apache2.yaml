@@ -1,0 +1,19 @@
+---
+- name: Verify if Apache2 is running
+  hosts: all
+  become: yes
+  tasks:
+    - name: Check if Apache2 is running
+      shell: systemctl is-active apache2
+      register: apache_status
+      ignore_errors: yes
+
+    - name: Show success message if Apache2 is running
+      debug:
+        msg: "Apache2 is running: SUCCESS"
+      when: apache_status.stdout == "active"
+
+    - name: Show failure message if Apache2 is not running
+      debug:
+        msg: "Apache2 is not running: FAILED"
+      when: apache_status.stdout != "active"

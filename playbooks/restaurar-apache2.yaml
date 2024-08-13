@@ -1,13 +1,8 @@
 ---
-- name: Verify and reconfigure Apache if not running
+- name: reconfigure Apache if not running
   hosts: vm2
   become: yes
   tasks:
-    - name: Check if Apache is running
-      shell: systemctl is-active apache2
-      register: apache_status
-      ignore_errors: yes
-
     - name: Apply configuration if Apache is not running
       block:
         - name: Apply Apache configuration
