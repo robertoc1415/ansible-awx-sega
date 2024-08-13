@@ -6,7 +6,7 @@
     - name: Check if Apache2 is running
       shell: systemctl is-active apache2
       register: apache_status
-      ignore_errors: yes
+      failed_when: apache_status.rc != 0 and apache_status.stdout != "inactive"
 
     - name: Show success message if Apache2 is running
       debug:
