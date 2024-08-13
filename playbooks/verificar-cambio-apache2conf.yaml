@@ -6,7 +6,7 @@
     - name: Verificar si los archivos son iguales
       ansible.builtin.command: diff /etc/apache2/apache2.conf /etc/apache2/apache2-original.conf
       register: diff_output
-      ignore_errors: yes
+      failed_when: diff_output.rc != 0
 
     - name: Mostrar mensaje de éxito si los archivos son iguales
       ansible.builtin.debug:
