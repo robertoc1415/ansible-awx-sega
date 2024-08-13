@@ -4,16 +4,16 @@
   become: yes
   tasks:
     - name: Verificar si los archivos son iguales
-      command: diff /etc/apache2/apache2.conf /etc/apache2/apache2-original.conf
-      register: diff_result
+      ansible.builtin.command: diff /etc/apache2/apache2.conf /etc/apache2/apache2-original.conf
+      register: diff_output
       ignore_errors: yes
 
     - name: Mostrar mensaje de éxito si los archivos son iguales
-      debug:
+      ansible.builtin.debug:
         msg: "Los archivos son iguales: SUCCESS"
-      when: diff_result.rc == 0
+      when: diff_output.rc == 0
 
     - name: Mostrar mensaje de fallo si los archivos no son iguales
-      debug:
+      ansible.builtin.debug:
         msg: "Los archivos no son iguales: FAILED"
-      when: diff_result.rc != 0
+      when: diff_output.rc != 0
