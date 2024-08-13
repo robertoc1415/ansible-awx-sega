@@ -1,3 +1,4 @@
+
 ---
 - name: Verify if Apache2 is running
   hosts: vm2
@@ -6,7 +7,8 @@
     - name: Check if Apache2 is running
       shell: systemctl is-active apache2
       register: apache_status
-      failed_when: apache_status.rc != 0 and apache_status.stdout != "inactive"
+      failed_when: apache_status.stdout != "active" 
+      changed_when: false
 
     - name: Show success message if Apache2 is running
       debug:
