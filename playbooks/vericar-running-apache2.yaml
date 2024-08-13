@@ -1,6 +1,6 @@
 ---
 - name: Verify if Apache2 is running
-  hosts: all
+  hosts: vm2
   become: yes
   tasks:
     - name: Check if Apache2 is running

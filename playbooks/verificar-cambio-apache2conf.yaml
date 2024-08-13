@@ -1,6 +1,6 @@
 ---
 - name: Verificar si los archivos son iguales
-  hosts: all
+  hosts: vm2
   become: yes
   tasks:
     - name: Verificar si los archivos son iguales
